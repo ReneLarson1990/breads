@@ -19,7 +19,6 @@ function New () {
             name="image"
             pattern="https?://.+" 
             title="Include http://"
-            required
             />
           <label htmlFor="hasGluten">Has Gluten?</label>
           <input

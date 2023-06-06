@@ -12,6 +12,8 @@ app.set('views', __dirname + '/views')
 app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine())
 app.use(express.urlencoded({extended: true}))
+const methodOverride = require('method-override')
+app.use(methodOverride('_method'))
 
 // ROUTES
 app.get('/', (req, res) => {
@@ -32,7 +34,8 @@ app.listen(PORT, () => {
   console.log('listening on port', PORT);
 })
 
-//create
+
+
 
 
 
