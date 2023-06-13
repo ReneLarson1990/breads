@@ -35,6 +35,8 @@ breads.get('/:id/edit', (req, res) => {
 breads.get('/:id', (req, res) => {
   Bread.findById(req.params.id)
       .then(foundBread => {
+        const bakedBy =foundBread.getBakedBy()
+        console.log(bakedBy)
           res.render('show', {
               bread: foundBread
           })
@@ -62,7 +64,7 @@ breads.post('/', express.urlencoded({ extended: true }), (req, res) => {
     })
     .catch((error) => {
       console.error('Error creating bread:', error);
-      res.status(400).send('Validation failed. this bread could not be created.');
+      res.status(404).send('Validation failed. this bread could not be created.');
     });
 });
 
@@ -91,7 +93,9 @@ breads.put('/:id', (req, res) => {
     })
 })
 
-//Data/seeds Route
+// //Data/seeds Route
+
+
 breads.get('/data/seed', (req, res) => {
   Bread.insertMany([
     {
@@ -119,5 +123,41 @@ breads.get('/data/seed', (req, res) => {
       res.redirect('/breads')
     })
 })
+
+
+// //Data/seeds Route 2 update
+
+
+breads.get('/data/seed2', (req, res) => {
+  const validatedBakers = ['Monica', 'Rachel', 'Phoebe', 'Joey', 'Chandler', 'Ross'];
+
+
+  Bread.find()
+    .then(breads => {
+      breads.forEach(async (bread) => {
+        const randomIndex = Math.floor(Math.random() * validatedBakers.length);
+        const randomBaker = validatedBakers[randomIndex];
+
+        bread.baker = randomBaker;
+
+        try {
+          await bread.save();
+        } catch (error) {
+          console.error('Error updating bread:', error);
+          res.status(500).send('An error occurred while updating the breads.');
+          return;
+        }
+      });
+
+      res.redirect('/breads');
+    })
+    .catch(error => {
+      console.error('Error retrieving breads:', error);
+      res.status(500).send('An error occurred while retrieving the breads.');
+    });
+});
+
+// STATIC HELPER BONUS
+
 
 module.exports=breads
