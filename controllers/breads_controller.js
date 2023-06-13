@@ -46,18 +46,27 @@ breads.get('/:id', (req, res) => {
 
 
 // CREATE
-breads.post('/', express.urlencoded({extended: true}), (req, res) => {
+breads.post('/', express.urlencoded({ extended: true }), (req, res) => {
   if (!req.body.image) {
-    req.body.image = undefined
+    req.body.image = undefined;
   }
-  if(req.body.hasGluten === 'on') {
-    req.body.hasGluten = 'true'
+  if (req.body.hasGluten === 'on') {
+    req.body.hasGluten = 'true';
   } else {
-    req.body.hasGluten = 'false'
+    req.body.hasGluten = 'false';
   }
+
   Bread.create(req.body)
-  res.redirect("/breads")
-})
+    .then(() => {
+      res.redirect('/breads');
+    })
+    .catch((error) => {
+      console.error('Error creating bread:', error);
+      res.status(400).send('Validation failed. this bread could not be created.');
+    });
+});
+
+
 
 // DELETE
 breads.delete('/:id', (req, res) => {
