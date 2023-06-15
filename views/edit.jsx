@@ -16,14 +16,13 @@ function Edit ({bread, index}) {
           title="Include http://"
         />
         <label htmlFor="baker">Baker</label>
-        <select name="baker" id="baker">
-          <option value="Rachel">Rachel</option>
-          <option value="Monica">Monica</option>
-          <option value="Joey">Joey</option>
-          <option value="Chandler">Chandler</option>
-          <option value="Ross">Ross</option>
-          <option value="Phoebe">Phoebe</option>
-        </select>
+        <select name="baker" id="baker" defaultValue={bread.baker}>
+          {baker_seed.map((baker) => {
+            return(
+              <option value={baker.id} key={baker.id}>{baker.name}</option>
+            )
+          })}
+          </select>
 
         <label htmlFor="hasGluten">Has Gluten?</label>
         <input type="checkbox" name="hasGluten" id="hasGluten" defaultChecked />
