@@ -1,5 +1,5 @@
 const React = require('react')
-const Default = require('./layouts/Default')
+const Default = require('./layouts/default')
 
 function Edit ({bread, index}) {
   return (
@@ -17,7 +17,7 @@ function Edit ({bread, index}) {
         />
         <label htmlFor="baker">Baker</label>
         <select name="baker" id="baker" defaultValue={bread.baker}>
-          {baker_seed.map((baker) => {
+          {bread.bakers.map((baker) => {
             return(
               <option value={baker.id} key={baker.id}>{baker.name}</option>
             )
